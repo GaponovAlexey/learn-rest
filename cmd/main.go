@@ -1,15 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"log"
 
-type TOML struct {
-	port string
-	log  string
-}
+	"github.com/BurntSushi/toml"
+	"github.com/GaponovAlexey/learn-rest/pkg/app/configToml"
+)
 
 func main() {
-	var s TOML
-	_, err := 
-	fmt.Println("start")
+	flag.Parse()
+	var configPath string
+	fmt.Println("c:", configPath)
+
+	conf := configToml.NewConfig()
+
+	_, err := toml.DecodeFile(configPath, &conf)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(conf)
 
 }
