@@ -2,21 +2,33 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"net/http"
+	"os"
+	"path"
+	"runtime"
 
-	"github.com/spf13/viper"
+	"github.com/sirupsen/logrus"
 )
 
-func main() {
-	if err := initConfig(); err != nil {
-		log.Fatalf("Error initial config: %s", err.Error())
-	}
-	fmt.Println(viper.ReadConfig())
-
+func Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "easy")
 }
 
-func initConfig() error {
-	viper.AddConfigPath("configs")
-	viper.SetConfigName("config")
-	return viper.ReadInConfig()
+func main() {
+	http.HandleFunc("/", Home)
+
+	loge := logrus.New()
+	loge.SetReportCaller(true)
+	loge.Formatter = &logrus.TextFormatter{
+		CallerPrettyfier: func(f *runtime.Frame) (function string, file string) {
+			filename := path.Base(f.File)
+			return fmt.Sprintf("%s()", f.Function), fmt.Sprintf("%s,%d", filename, f.Line)
+		},
+		DisableColors: true,
+		FullTimestamp: true,
+	}
+	os.MkdirAll("logs",0644)
+
+	loge.Infof("start")
+	http.ListenAndServe(":3000", nil)
 }
