@@ -1,25 +1,22 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 
-	"github.com/BurntSushi/toml"
-	"github.com/GaponovAlexey/learn-rest/pkg/app/configToml"
+	"github.com/spf13/viper"
 )
 
 func main() {
-	flag.Parse()
-	var configPath string
-	fmt.Println("c:", configPath)
-
-	conf := configToml.NewConfig()
-
-	_, err := toml.DecodeFile(configPath, &conf)
-	if err != nil {
-		log.Println(err)
+	if err := initConfig(); err != nil {
+		log.Fatalf("Error initial config: %s", err.Error())
 	}
-	fmt.Println(conf)
+	fmt.Println(viper.AllSettings())
+	
+}
 
+func initConfig() error {
+	viper.AddConfigPath("configs")
+	viper.SetConfigName("config")
+	return viper.ReadInConfig()
 }

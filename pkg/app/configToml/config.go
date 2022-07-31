@@ -1,8 +1,8 @@
 package configToml
 
 type TOML struct {
-	port string `toml:"port"`
-	log  string `toml:"log"`
+	port string `yaml:"port"`
+	log  string `yaml:"log"`
 }
 
 func NewConfig() *TOML {
