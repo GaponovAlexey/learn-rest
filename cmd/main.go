@@ -11,8 +11,8 @@ func main() {
 	if err := initConfig(); err != nil {
 		log.Fatalf("Error initial config: %s", err.Error())
 	}
-	fmt.Println(viper.AllSettings())
-	
+	fmt.Println(viper.ReadConfig())
+
 }
 
 func initConfig() error {
