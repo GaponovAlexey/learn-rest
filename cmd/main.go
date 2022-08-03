@@ -5,6 +5,7 @@ import (
 
 	"github.com/GaponovAlexey/learn-rest/logging"
 	"github.com/GaponovAlexey/learn-rest/pkg/app/config"
+	"github.com/GaponovAlexey/learn-rest/pkg/app"
 )
 
 func main() {

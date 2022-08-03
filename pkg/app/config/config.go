@@ -12,8 +12,9 @@ type Config struct {
 	isDevelopment bool `env:"IS_DEV" env-default:"false"`
 	// listen        struct {
 	Type   string `env:"LISTEN_TYPE" env-default:"port"`
-	BindIP string `env:"BIND_IP" env-default:"0.0.0.0"`
-	port   string `env:"PORT" env-default:"3000"`
+	BindIP string `env:"BIND_IP" env-default:"127.0.0.1"`
+	Port   string `env:"PORT" env-default:"3000"`
+	SocketFile   string `env:"SOCKET_FILE" env-default:"app.sock"`
 	// }
 	// AppConfig struct {
 	LogLevel string `env:"PORT" env-default:"3000"`
