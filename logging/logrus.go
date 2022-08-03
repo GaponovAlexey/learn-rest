@@ -30,8 +30,8 @@ func (h *writerHook) Fire(e *logrus.Entry) error {
 	return err
 }
 
-func (h *writerHook) levels() []logrus.Level {
-	return h.LogLevels
+func (hook *writerHook) levels() []logrus.Level {
+	return hook.LogLevels
 }
 
 var e *logrus.Entry

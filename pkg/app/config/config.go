@@ -24,13 +24,13 @@ type Config struct {
 	// }
 }
 
-var instance Config
+var instance *Config
 var once sync.Once
 
 func GetConfig() *Config {
 	once.Do(func() {
 		log.Println("config")
-		instance = Config{}
+		instance = &Config{}
 		if err := cleanenv.ReadEnv(instance); err != nil {
 			var helpText = "help"
 			help, _ := cleanenv.GetDescription(instance, &helpText)
@@ -38,5 +38,5 @@ func GetConfig() *Config {
 			log.Println(err)
 		}
 	})
-	return &instance
+	return instance
 }
