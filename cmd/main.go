@@ -2,17 +2,15 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+
+	"github.com/GaponovAlexey/learn-rest/pkg/app/config"
 )
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "easy")
-}
-
 func main() {
-	http.HandleFunc("/", Home)
-	
 
+	err := config.GetConfig()
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	http.ListenAndServe(":3000", nil)
 }

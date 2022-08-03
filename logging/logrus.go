@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
 	"runtime"
@@ -11,24 +12,25 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type writeHook struct {
+type writerHook struct {
 	Writer    []io.Writer
 	LogLevels []logrus.Level
 }
 
-func (h *writeHook) Fire(e *logrus.Entry) error {
+func (h *writerHook) Fire(e *logrus.Entry) error {
 	line, err := e.String()
 	if err != nil {
 		fmt.Println(err)
 	}
-	
+
 	for _, w := range h.Writer {
 		_, err := w.Write([]byte(line))
+		fmt.Println(err)
 	}
 	return err
 }
 
-func (h *writeHook) levels() []logrus.Level {
+func (h *writerHook) levels() []logrus.Level {
 	return h.LogLevels
 }
 
@@ -45,14 +47,14 @@ func GetLogger() *Logger {
 func (l *Logger) lWithField(k string, v interface{}) *Logger {
 	return &Logger{l.WithField(k, v)}
 }
-func (l *Logger) lWithField(f map[string]interface{}) *Logger {
+func (l *Logger) lWithFields(f map[string]interface{}) *Logger {
 	return &Logger{l.WithFields(f)}
 }
 
-func Init() {
+func Init(level string) {
 	logrusLevel, err := logrus.ParseLevel(level)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
 	l := logrus.New()
@@ -65,12 +67,14 @@ func Init() {
 		DisableColors: false,
 		FullTimestamp: true,
 	}
+
 	l.SetOutput(ioutil.Discard)
-	l.AddHook(&writeHook{
+
+	l.AddHook(&writerHook{
 		Writer:    []io.Writer{os.Stdout},
 		LogLevels: logrus.AllLevels,
 	})
 
-	l.SetLevel(logrus.TraceLevel)
+	l.SetLevel(logrusLevel)
 	e = logrus.NewEntry(l)
 }
