@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	s := server.New()
+	config := server.NewConfig()
+	s := server.New(config)
 	if err := s.Start(); err != nil {
 		logrus.Error(err)
 	}
