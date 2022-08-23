@@ -15,7 +15,7 @@ func main() {
 	log.Println("logger")
 	l := logging.GetLogger()
 
-	app, err := app.NewApp(cfg, l)
+	_, err := app.NewApp(cfg, l)
 	if err != nil {
 		l.Fatal()
 	}
