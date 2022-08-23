@@ -1,22 +1,13 @@
 package main
 
 import (
-	"log"
-
-	"github.com/GaponovAlexey/learn-rest/logging"
-	"github.com/GaponovAlexey/learn-rest/pkg/app/config"
-	"github.com/GaponovAlexey/learn-rest/pkg/app"
+	"github.com/GaponovAlexey/learn-rest/pkg/server"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	log.Println("config")
-	cfg := config.GetConfig()
-
-	log.Println("logger")
-	l := logging.GetLogger()
-
-	app, err := app.NewApp(cfg, l)
-	if err != nil {
-		l.Fatal()
+	s := server.New()
+	if err := s.Start(); err != nil {
+		logrus.Error(err)
 	}
 }
