@@ -1,13 +1,17 @@
 package store
 
 import (
-	"database/sql"
-	_ "github.com/lib/pq"
+	"fmt"
+	"os"
+
+	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 )
 
 type Store struct {
 	config *Config
-	db     *sql.DB
+	db     *sqlx.DB
 }
 
 func New(config *Config) *Store {
@@ -18,7 +22,11 @@ func New(config *Config) *Store {
 
 // Open
 func (s *Store) Open() error {
-	db, err := sql.Open("postgres", s.config.DatabaseURL)
+	err := godotenv.Load()
+	if err != nil {
+		logrus.Fatal("Error loading .env file")
+	}
+	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s", os.Getenv("HOST"), os.Getenv("PORT"), os.Getenv("USERNAME"), os.Getenv("DBNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("SSLMODE")))
 	if err != nil {
 		return err
 	}
