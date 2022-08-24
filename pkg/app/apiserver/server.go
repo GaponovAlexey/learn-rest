@@ -7,14 +7,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/GaponovAlexey/learn-rest/pkg/app/model"
+	"github.com/GaponovAlexey/learn-rest/pkg/app/store"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 
 	"github.com/gorilla/handlers"
 
-	"github.com/gopherschool/http-rest-api/internal/app/model"
-
-	"github.com/gopherschool/http-rest-api/internal/app/store"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )

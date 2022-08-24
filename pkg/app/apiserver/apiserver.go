@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/gopherschool/http-rest-api/internal/app/store/sqlstore"
+	"github.com/GaponovAlexey/learn-rest/pkg/app/store/sqlstore"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq" // ...
 )

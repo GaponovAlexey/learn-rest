@@ -6,7 +6,6 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"github.com/gopherschool/http-rest-api/internal/app/apiserver"
 )
 
 var (
