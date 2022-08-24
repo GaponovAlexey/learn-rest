@@ -1,8 +1,8 @@
 package teststore
 
 import (
-	"github.com/gopherschool/http-rest-api/internal/app/model"
-	"github.com/gopherschool/http-rest-api/internal/app/store"
+	"github.com/GaponovAlexey/learn-rest/pkg/app/model"
+	"github.com/GaponovAlexey/learn-rest/pkg/app/store"
 )
 
 // UserRepository ...

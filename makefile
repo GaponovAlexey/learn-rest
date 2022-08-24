@@ -1,7 +1,7 @@
 .PHONY: start
 
 start:
-	 go run "d:\Js\learn\learn-rest\cmd\apiserver\main.go"
+	 go run d:\Js\learn\learn-rest\cmd\main.go
 
 
 test:
