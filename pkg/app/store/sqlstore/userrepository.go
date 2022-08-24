@@ -1,10 +1,7 @@
 package sqlstore
 
 import (
-	"database/sql"
-
 	"github.com/GaponovAlexey/learn-rest/pkg/app/model"
-	"github.com/GaponovAlexey/learn-rest/pkg/app/store"
 )
 
 // UserRepository ...
@@ -40,10 +37,6 @@ func (r *UserRepository) Find(id int) (*model.User, error) {
 		&u.Email,
 		&u.EncryptedPassword,
 	); err != nil {
-		if err == sql.ErrNoRows {
-			return nil, store.ErrRecordNotFound
-		}
-
 		return nil, err
 	}
 
@@ -61,10 +54,6 @@ func (r *UserRepository) FindByEmail(email string) (*model.User, error) {
 		&u.Email,
 		&u.EncryptedPassword,
 	); err != nil {
-		if err == sql.ErrNoRows {
-			return nil, store.ErrRecordNotFound
-		}
-
 		return nil, err
 	}
 

@@ -1,7 +1,6 @@
 package sqlstore
 
 import (
-	"database/sql"
 	"fmt"
 	"strings"
 	"testing"
@@ -14,7 +13,7 @@ import (
 func TestDB(t *testing.T, databaseURL string) (*sqlx.DB, func(...string)) {
 	t.Helper()
 
-	db, err := sql.Open("postgres", databaseURL)
+	db, err := sqlx.Open("postgres", databaseURL)
 	if err != nil {
 		t.Fatal(err)
 	}
