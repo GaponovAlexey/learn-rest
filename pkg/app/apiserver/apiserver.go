@@ -1,12 +1,16 @@
 package apiserver
 
 import (
-	"database/sql"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/GaponovAlexey/learn-rest/pkg/app/store/sqlstore"
 	"github.com/gorilla/sessions"
+	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // ...
+	"github.com/sirupsen/logrus"
 )
 
 // Start ...
@@ -21,11 +25,15 @@ func Start(config *Config) error {
 	sessionStore := sessions.NewCookieStore([]byte(config.SessionKey))
 	srv := newServer(store, sessionStore)
 
-	return http.ListenAndServe(config.BindAddr, srv)
+	return http.ListenAndServe(":3000", srv)
 }
 
-func newDB(dbURL string) (*sql.DB, error) {
-	db, err := sql.Open("postgres", dbURL)
+func newDB(dbURL string) (*sqlx.DB, error) {
+	err := godotenv.Load()
+	if err != nil {
+		logrus.Fatal("Error loading .env file")
+	}
+	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s", os.Getenv("HOST"), os.Getenv("PORT"), os.Getenv("USERNAME"), os.Getenv("DBNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("SSLMODE")))
 	if err != nil {
 		return nil, err
 	}
