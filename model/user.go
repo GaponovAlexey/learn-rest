@@ -1,7 +1,7 @@
 package model
 
 import (
-	validation "github.com/go-ozzo/ozzo-validation"
+	val "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -14,11 +14,11 @@ type User struct {
 }
 
 func (u *User) Validate() error {
-	return validation.ValidateStruct(
+	return val.ValidateStruct(
 		u,
-		validation.Field(&u.Email, validation.Required, is.Email),
-		validation.Field(&u.Password, validation.Required, validation.Length(6, 20)),
-		
+		val.Field(&u.Email, val.Required, is.Email),
+		val.Field(&u.Password, val.Required, val.Length(6, 20)),
+
 	)
 }
 
